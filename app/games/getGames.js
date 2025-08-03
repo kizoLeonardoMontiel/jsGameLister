@@ -4,8 +4,8 @@ async function GetGames(page,resultsPerPage){
     { method: 'POST',
         headers: {
         'Accept': 'application/json',
-        'Client-ID': '<client_id>',
-        'Authorization': 'Bearer <client_secret>',
+        'Client-ID': 'txjk3oonc2shbnnbvmlu19vy2jqe78',
+        'Authorization': '727569y59pkezhbd11id4y04a1h73d ',
     },
         body: `fields name, first_release_date, url; limit ${resultsPerPage}; offset ${page * resultsPerPage}; sort first_release_date desc;`
     })
@@ -18,8 +18,6 @@ async function GetGames(page,resultsPerPage){
     });
     return response;
 }
-
-
 
 export default async function Search(allGames = [], resultsPerPage) {
     for(let i = 0; i < 1; i++){

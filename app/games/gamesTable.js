@@ -1,6 +1,7 @@
 import Search from './getGames';
 
 import { useEffect } from 'react';
+import { useState } from 'react';
 
 function EpochToDate(date){
     if (date == null){
@@ -15,12 +16,12 @@ function EpochToDate(date){
 }
 
 export default function GamesTable({resultsPerPage}) {
-    let allGames = [];
+    let [allGames, setAllGames] = useState([]);
     
     useEffect(() => {
         const fetchGames = async () => {
-            allGames = await Search(allGames, resultsPerPage);
-            console.log("All games fetched:", allGames.data);
+            setAllGames(await Search(allGames, resultsPerPage));
+            console.log("All games fetched:", allGames);
         };
         fetchGames();
     }, [resultsPerPage]);
