@@ -1,19 +1,18 @@
 "use client";
-import { Suspense } from 'react';
 import GamesTable from './gamesTable';
 
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 export default function Home() {
     const searchParams = useSearchParams();
     let orderBy = searchParams.get('sort') || 'asc';
     let resultsPerPage = Number(searchParams.get('resultsPerPage')) || 10;
     let page = Number(searchParams.get('page')) || 0;
-    console.log("Results per page:", resultsPerPage);
 
     return (
-        <div>
-            <Suspense>
+        <Suspense>
+        <div>    
             <form>
                 <h1 className="text-3xl font-bold text-center mt-10 py-4">Game List</h1>
                 <div className="flex items-center justify-center gap-4 mb-6">
@@ -69,7 +68,7 @@ export default function Home() {
                 </div>
             </form>
             <GamesTable resultsPerPage={resultsPerPage} page={page} orderBy={orderBy} />
-            </Suspense>
-        </div>
+            </div>
+        </Suspense>
     );
 }
