@@ -15,18 +15,16 @@ function EpochToDate(date){
     }
 }
 
-export default function GamesTable({resultsPerPage}) {
+export default function GamesTable({resultsPerPage, page}) {
     let [allGames, setAllGames] = useState([]);
-    
+
     useEffect(() => {
         const fetchGames = async () => {
-            setAllGames(await Search(allGames, resultsPerPage));
-            console.log("All games fetched:", allGames);
+            setAllGames(await Search(allGames, resultsPerPage, page));
         };
         fetchGames();
-    }, [resultsPerPage]);
-    
-    
+    }, [resultsPerPage, page]);
+
     return(
         <table className="bg-white border border-gray-300 shadow-md rounded-lg align-middle mx-auto">
             <thead className="text-2xl text-black-500 font-family:sans-serif font-bold font-weight:700 max-w-md py-4">
@@ -46,7 +44,7 @@ export default function GamesTable({resultsPerPage}) {
             <tfoot className="text-xl text-black-500 font-family:sans-serif font-bold font-weight:700 max-w-md py-4">
                 <tr>
                     <td colSpan="2" className="text-align: left">Total Games: {allGames.length}</td>
-                    <td className="text-align: right">Page: </td>
+                    <td className="text-align: right">Page: {page + 1}</td>
                 </tr>
             </tfoot>
         </table>

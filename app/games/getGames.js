@@ -1,13 +1,17 @@
 'use server';
-async function GetGames(page,resultsPerPage){
+
+async function GetGames(page,resultsPerPage,orderBy){
+    const clientID = process.env.CLIENT_ID;
+    const secret = process.env.SECRET;
+    console.log("order:", orderBy);
     const response = await fetch("https://api.igdb.com/v4/games",
     { method: 'POST',
         headers: {
         'Accept': 'application/json',
-        'Client-ID': 'txjk3oonc2shbnnbvmlu19vy2jqe78',
-        'Authorization': '727569y59pkezhbd11id4y04a1h73d ',
+        'Client-ID': clientID,
+        'Authorization': secret,
     },
-        body: `fields name, first_release_date, url; limit ${resultsPerPage}; offset ${page * resultsPerPage}; sort first_release_date desc;`
+        body: `fields name, first_release_date, url; limit ${resultsPerPage}; offset ${page * resultsPerPage}; sort first_release_date asc;`
     })
     .then(response => {
         return response.json();
@@ -19,12 +23,11 @@ async function GetGames(page,resultsPerPage){
     return response;
 }
 
-export default async function Search(allGames = [], resultsPerPage) {
-    for(let i = 0; i < 1; i++){
-        console.log("Fetching games...");
-        let games = await GetGames(i, resultsPerPage);
-        allGames = allGames.concat(games);
-    }
+export default async function Search(allGames = [], resultsPerPage, page = 0, orderBy) {
+    console.log("Fetching games...");
+    let games = await GetGames(page, resultsPerPage, orderBy);
+    allGames = allGames.concat(games);
+    
     return allGames;
 }
 
